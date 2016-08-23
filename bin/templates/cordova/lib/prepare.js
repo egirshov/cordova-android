@@ -132,7 +132,8 @@ function updateProjectAccordingTo(platformConfig, locations) {
 
     manifest.getActivity()
         .setOrientation(findOrientationValue(platformConfig))
-        .setLaunchMode(findAndroidLaunchModePreference(platformConfig));
+        .setLaunchMode(findAndroidLaunchModePreference(platformConfig))
+        .setDocumentLaunchMode(findAndroidDocumentLaunchModePreference(platformConfig));
 
     manifest.setVersionName(platformConfig.version())
         .setVersionCode(platformConfig.android_versionCode() || default_versionCode(platformConfig.version()))
@@ -376,4 +377,38 @@ function findOrientationValue(platformConfig) {
     events.emit('warn', 'Unsupported global orientation: ' + orientation +
         '. Defaulting to value: ' + ORIENTATION_DEFAULT);
     return ORIENTATION_DEFAULT;
+}
+
+/*
+ * Gets and validates 'AndroidDocumentLaunchMode' prepference from config.xml.
+ *   Returns preference value and warns if it doesn't seems to be valid
+ *
+ * @param   {ConfigParser}  platformConfig  A configParser instance for
+ *   platform.
+ *
+ * XXX
+ * @return  {String}                  Preference's value from config.xml or
+ *   default value, if there is no such preference. The default value is
+ *   'singleTop'
+ */
+function findAndroidDocumentLaunchModePreference(platformConfig) {
+    var launchMode = platformConfig.getPreference('AndroidDocumentLaunchMode');
+    if (!launchMode) {
+        // Return a default value
+        return 'none';
+    }
+
+    var expectedValues = ['intoExisting', 'always', 'none', 'never'];
+    var valid = expectedValues.indexOf(launchMode) >= 0;
+    if (!valid) {
+        // Note: warn, but leave the launch mode as developer wanted, in case the list of options changes in the future
+        events.emit('warn', 'Unrecognized value for AndroidDocumentLaunchMode preference: ' +
+            launchMode + '. Expected values are: ' + expectedValues.join(', '));
+    } else if (launchMode != 'none' && launchMode != 'never') {
+        var mode = findAndroidLaunchModePreference(platformConfig);
+        if (mode != 'standard')
+            events.emit('warn', 'For values other than "none" and "never" the activity must be defined with launchMode="standard"');
+    }
+
+    return launchMode;
 }

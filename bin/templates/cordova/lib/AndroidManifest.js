@@ -98,6 +98,17 @@ AndroidManifest.prototype.getActivity = function() {
                 activity.attrib['android:launchMode'] = launchMode;
             }
             return this;
+        },
+        getDocumentLaunchMode: function () {
+            return activity.attrib['android:documentLaunchMode'];
+        },
+        setDocumentLaunchMode: function (launchMode) {
+            if (!launchMode) {
+                delete activity.attrib['android:documentLaunchMode'];
+            } else {
+                activity.attrib['android:documentLaunchMode'] = launchMode;
+            }
+            return this;
         }
     };
 };
