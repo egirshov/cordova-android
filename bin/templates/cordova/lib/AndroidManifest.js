@@ -88,6 +88,17 @@ AndroidManifest.prototype.getActivity = function() {
             }
             return this;
         },
+        getNoHistory: function () {
+            return activity.attrib['android:noHistory'];
+        },
+        setNoHistory: function (value) {
+            if (!value) {
+                delete activity.attrib['android:noHistory'];
+            } else {
+                activity.attrib['android:noHistory'] = value;
+            }
+            return this;
+        },
         getLaunchMode: function () {
             return activity.attrib['android:launchMode'];
         },

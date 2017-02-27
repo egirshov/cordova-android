@@ -184,6 +184,7 @@ function updateProjectAccordingTo(platformConfig, locations) {
 
     manifest.getActivity()
         .setOrientation(platformConfig.getPreference('orientation'))
+        .setNoHistory(platformConfig.getPreference('noHistory'))
         .setLaunchMode(findAndroidLaunchModePreference(platformConfig))
         .setDocumentLaunchMode(findAndroidDocumentLaunchModePreference(platformConfig));
 
