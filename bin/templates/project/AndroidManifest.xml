@@ -49,8 +49,8 @@
                 <action android:name="android.intent.action.EDIT" />
                 <data android:mimeType="application/example" />
             </intent-filter>
+            <meta-data android:name="co.solu.sdk.GenerateThumbnails" android:value="true" />
         </activity>
-        <meta-data android:name="co.solu.sdk.GenerateThumbnails" android:value="true" />
     </application>
 
     <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="__APILEVEL__"/>
