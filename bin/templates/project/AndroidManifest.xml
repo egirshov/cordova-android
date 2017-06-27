@@ -50,6 +50,7 @@
                 <data android:mimeType="application/example" />
             </intent-filter>
             <meta-data android:name="co.solu.sdk.GenerateThumbnails" android:value="true" />
+            <meta-data android:name="co.solu.sdk.FullscreenMode" android:value="resizable" />
         </activity>
     </application>
 
